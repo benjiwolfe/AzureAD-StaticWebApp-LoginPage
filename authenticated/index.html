@@ -22,5 +22,24 @@
         </div>
     </div>
     <script type="text/javascript" src="index.js"></script>
+    <script>
+        async function getUserInfo() {
+            const response = await fetch('/.auth/me');
+            const payload = await response.json();
+            const { clientPrincipal } = payload;
+            return clientPrincipal;
+        }
+
+        async function displayUserInfo() {
+            const userInfo = await getUserInfo();
+            if (userInfo) {
+                document.getElementById('user-info').textContent = `Hello, ${userInfo.userDetails}!`;
+            } else {
+                document.getElementById('user-info').textContent = 'Please sign in to see your user information.';
+            }
+        }
+
+        displayUserInfo();
+    </script>
 </body>
 </html>
